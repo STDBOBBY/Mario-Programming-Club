@@ -70,11 +70,19 @@ speed=0
 count=0
 gameOver = False
 # is_jumping=True
-
+countDown = 10
+clock = pg.time.Clock()
+startTick = pg.time.get_ticks()
 while True:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             sys.exit()
+    secondsPassed = (pg.time.get_ticks() - startTick)/1000
+    timeLeft = max(0, countDown - int(secondsPassed))
+    timerText = game_font.render(f"Time Left: {timeLeft}", True, (0,255,0))
+    
+    if timeLeft <= 0:
+        gameOver = True
     if not gameOver:
         # if pg.key.get_pressed()[pg.K_RIGHT]:
         #     right=True
@@ -111,6 +119,7 @@ while True:
         y = randint(350, 575)
         x = randint(0,1200)
         c.coin_rect.center = (x,y)
+        startTick = startTick + 1500
         score += 1
         text = game_font.render("Score: " + str(score), False, (0,255,0))
 
@@ -119,5 +128,6 @@ while True:
     screen.blit(mario,mario_rect)
     screen.blit(c.coin, c.coin_rect)# show mario on screen
     screen.blit(text, (50,100))
+    screen.blit(timerText, (50,125))
     draw_floor()                    # show floor on screen
     pg.display.flip()               # can not see anthing without this code =]]
