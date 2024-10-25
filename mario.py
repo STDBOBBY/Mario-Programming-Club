@@ -119,7 +119,7 @@ while True:
         y = randint(350, 575)
         x = randint(0,1200)
         c.coin_rect.center = (x,y)
-        startTick = startTick + 1500
+        startTick = startTick + 1000
         score += 1
         text = game_font.render("Score: " + str(score), False, (0,255,0))
 
